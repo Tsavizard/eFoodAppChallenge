@@ -29,7 +29,7 @@ router.route('/add').post((req, res) => {
 
 //delete order
 router.route('/:id').delete((req,res) =>{
-  Order.deleteOne({})
+  Order.deleteOne({_id:req.params.id})
   .then(() => res.json('Order deleted!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -37,7 +37,7 @@ router.route('/:id').delete((req,res) =>{
 //update order status
 router.route('/:id').put((req, res) => {
   const status = req.body.status;
-  Order.updateOne({status: req.body.status})
+  Order.updateOne({ _id : req.params.id}, { status : req.body.status})
      .then(() => res.json(' Order(s) Modified!'))
      .catch(err => res.status(400).json('Error: ' + err));
  });
