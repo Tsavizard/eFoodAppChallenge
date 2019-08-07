@@ -18,7 +18,11 @@ const foodsSchema = new Schema({
     minlength: 3
   },
   condoments: [{ _id: false, condomentName: String, condomentValue: Number }], 
-  extras: [{ _id: false, extraName: String, extraValue: Number }]
+  extras: [{ _id: false, extraName: String, extraValue: Number }],
+  foodcategory: {
+    type: String,
+    required: true,
+  }
 });
 
 const Food = mongoose.model('Food', foodsSchema);

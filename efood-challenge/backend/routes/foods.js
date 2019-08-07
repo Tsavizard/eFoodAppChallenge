@@ -14,12 +14,14 @@ router.route('/add').post((req, res) => {
   const basePrice = req.body.basePrice;
   const condoments = req.body.condoments;
   const extras = req.body.extras;
+  const foodcategory = req.body.foodcategory;
 
   const newFood = new Food({
     foodName,
     basePrice,
     condoments,
     extras,
+    foodcategory,
   });
 
   newFood.save()
@@ -29,7 +31,7 @@ router.route('/add').post((req, res) => {
 
 //delete food from menu
 router.route('/:id').delete((req,res) =>{
-  Food.deleteOne({})
+  Food.findByIdAndDelete(req.params.id)
   .then(() => res.json('Food deleted!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
