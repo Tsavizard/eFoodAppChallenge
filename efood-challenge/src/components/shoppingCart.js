@@ -92,7 +92,7 @@ export default class ShoppingCart extends Component {
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align="left" width= {"60%"}> <h5>{element.foodName}</h5> </TableCell>
-                                        <TableCell align="right" width= {"20%"}> <h5>{element.totalPrice}</h5> </TableCell>
+                                        <TableCell align="right" width= {"20%"}> <h5>€{element.totalPrice}</h5> </TableCell>
                                         {this.deleteFromCartButton(element)}
                                     </TableRow>                                    
                                             {this.details(element.condoments)}
@@ -153,7 +153,7 @@ export default class ShoppingCart extends Component {
                 {this.populateCart()}
                 <hr/>
                 {this.CheckoutButton()}
-                <h4 className="float-left">Total Cost:  {this.state.cartSum}</h4>
+                <h4 className="float-left">Total Cost:  €{parseFloat(this.state.cartSum.toFixed(2))} </h4>
                 <hr/>        
             </div>  
         )

@@ -35,11 +35,10 @@ router.route('/deleteFromOrders/:id').delete((req,res) =>{
 });
 
 //update order status
-router.route('/updateInOrders/:id').put((req, res) => {
-  const status = req.body.status;
-  Order.updateOne({ _id : req.params.id}, { status : req.body.status})
+router.route('/updateInOrders/:id').patch((req, res) => {
+  Order.findByIdAndUpdate({ _id : req.params.id}, { status : req.body.status})
      .then(() => res.json(' Order(s) Modified!'))
-     .catch(err => res.status(400).json('Error: ' + err));
+     .catch(err => res.status(400).json('Error: ' + req.params.id));
  });
 
 module.exports = router;

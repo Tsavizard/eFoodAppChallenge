@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Redirect } from 'react-router-dom'
 
 export default class Checkout extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             loading: false,
             cart: [],
-            address: ""
+            address: "",
+            status: "Pending",
+            redirect: false
         };
         this.handleFinalize = this.handleFinalize.bind(this)
         this.handleAddress = this.handleAddress.bind(this)
@@ -58,18 +61,40 @@ export default class Checkout extends Component {
             'Content-Type': 'application/json'
             }
         }).then(response => response.json())
-        .then(response => 
-            console.log('Success:', JSON.stringify(response)))
+        .then(response => {
+            console.log('Success:', JSON.stringify(response))
+            console.log("Starting Cleanup")
+        })
         .catch(error => console.error('Error:', error))
+
+        fetch("http://localhost:5000/cart/clearCart", {
+            method: 'DELETE'
+        }).then (response => response.json())
+            .then (response => {
+                console.log(response+ "\n Redirecting")
+            }).catch(error => console.error('Error:', error))
+            let path = "/";
+            this.props.history.push(path);
+    }
+
+    setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/target' />
+        }
     }
 
     render() {
         if (this.state.isLoading){
             return (<h1>Loading...</h1>)
         }
-
         return (
             <div>
+                {this.renderRedirect()}
                 <div className="container">
                     <Form>
                         <Form.Group controlId="formBasicEmail">
@@ -80,7 +105,7 @@ export default class Checkout extends Component {
                             </Form.Text>
                         </Form.Group>
                         <Button variant="primary" type="submit" onClick={this.handleFinalize}>
-                            Finalize
+                            Finalise
                         </Button>
                     </Form>
                     <br/>

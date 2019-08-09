@@ -38,6 +38,12 @@ router.route('/addToCart').post((req, res) => {
 router.route('/deleteFromCart/:id').delete((req,res) =>{
   CartItem.findByIdAndDelete(req.params.id)
   .then(() => res.json('Removed from cart!'))
+  .catch(err => res.status(400).json('Error: ' + err))})
+
+
+router.route('/clearCart/').delete((req,res) =>{
+  CartItem.deleteMany()
+  .then(() => res.json('Cart cleared!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
 

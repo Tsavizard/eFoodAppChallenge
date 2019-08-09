@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import SpanningTable from './orderTable'
 
+
 export default class Orders extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             isLoading: true,
             visible: false
