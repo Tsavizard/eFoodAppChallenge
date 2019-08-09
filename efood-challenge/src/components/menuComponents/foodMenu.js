@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MenuGrid from './MenuGrid'
-import FoodDetails from './foodItemDetails'
 
 export default class FoodMenu extends Component {
   
@@ -13,19 +12,7 @@ export default class FoodMenu extends Component {
       mainCourses: [],
       drinks: []
     };
-    this.onFoodItemClick = this.onFoodItemClick.bind(this)
   }
-
-  myModalRef = ({handleShow}) => {
-    this.showModal = handleShow
-  }
-
-  onFoodItemClick = (e) => {    
-    this.setState({
-      clickedFood: this.state.foods.find( function (food) {return food._id === e.target.id}) 
-    })
-   }
-
   componentDidMount(){
     let appetisers =[]
     let salads =[]
@@ -57,15 +44,9 @@ export default class FoodMenu extends Component {
           salads: salads,
           mainCourses: mainCourses,
           drinks: drinks,
+          isLoading:false
         })
       })
-      this.setState({isLoading:false})
-  }
-  
-  componentDidUpdate(){
-    if(this.state.clickedFood !== undefined){
-      this.showModal();
-    }
   }
   
   render() {
@@ -78,19 +59,19 @@ export default class FoodMenu extends Component {
       return (<h1 style={{textAlign: "center"}}>Loading...</h1>)
     }
     return(
-      <div><FoodDetails ref={this.myModalRef}></FoodDetails>
-      <h1 style={{textAlign: "center"}}>Menu</h1>
+      <div>
+        <h1 style={{textAlign: "center"}}>Menu</h1>
         <div>
-            <MenuGrid items={this.state.appetisers} myStyles={myStyles} clickHandler = {this.onFoodItemClick} cat ="Appetisers"/>
+            <MenuGrid items={this.state.appetisers} myStyles={myStyles}cat ="Appetisers"/>
         </div>
         <div>
-            <MenuGrid items={this.state.salads} myStyles={myStyles} clickHandler = {this.onFoodItemClick} cat ="Salads"/>
+            <MenuGrid items={this.state.salads} myStyles={myStyles}cat ="Salads"/>
         </div>
         <div>
-            <MenuGrid items={this.state.mainCourses} myStyles={myStyles} clickHandler = {this.onFoodItemClick} cat ="Main Courses"/>
+            <MenuGrid items={this.state.mainCourses} myStyles={myStyles} cat ="Main Courses"/>
         </div>
         <div>
-            <MenuGrid items={this.state.drinks} myStyles={myStyles} clickHandler = {this.onFoodItemClick} cat ="Drinks"/>
+            <MenuGrid items={this.state.drinks} myStyles={myStyles} cat ="Drinks"/>
         </div>
       </div>
     )

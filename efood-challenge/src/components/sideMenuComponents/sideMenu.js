@@ -6,7 +6,7 @@ export default class SideMenu extends Component {
     constructor(props){
         super(props);
         this.state ={
-            loading: false,
+            isLoading: false,
             menu: []
         };
     }
@@ -19,18 +19,17 @@ export default class SideMenu extends Component {
             let foods  =  Object.keys(response).map((item, index) => {
             return response[item]
             })
-            this.setState({ menu: foods })
+            this.setState({ menu: foods, isLoading:false })
             })
-            
-            this.setState({loading:false})
     }
     
     render() {
-
-
+        if(this.state.isLoading){
+            return (<h1 style={{textAlign: "center"}}>Loading...</h1>)
+        }
         return (
             <div id="foodMenu" style={{textAlign: "center"}}>
-                <h2>Catalog</h2>
+                <h2>Catalogue</h2>
                 <ListGroup >
                     <ListGroup.Item><h3 style={{text:"bold"}}>Appetisers</h3></ListGroup.Item>
                     <MyTable menu = {this.state.menu}  cat="Appetisers"/>

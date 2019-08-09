@@ -7,6 +7,7 @@ import SideMenu from './components/sideMenuComponents/sideMenu'
 import ShoppingCart from './components/shoppingCart'
 import LandingPage from "./components/landingPage"
 import Checkout from './components/checkoutForm'
+import Orders from './components/orderComponents/orders'
  
 function App() {
   return ( 
@@ -15,6 +16,11 @@ function App() {
     <div>
         <Route path="/" exact component={LandingPage} />
     </div>
+
+    <div>
+        <Route path="/orders" exact component={Orders} />
+    </div>
+
     <div className="row">
       <div className="col-3">
       <Route path="/menu" exact component={SideMenu} />

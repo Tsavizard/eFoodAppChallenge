@@ -9,9 +9,9 @@ router.route('/').get((req, res) => {
 });
 
 //add new order
-router.route('/add').post((req, res) => {
+router.route('/addToOrders').post((req, res) => {
  const address = req.body.address;
- const foods = req.body.foods;
+ const foods = req.body.cart;
  const orderSum = req.body.orderSum;
  const status = req.body.status;
 
@@ -28,14 +28,14 @@ router.route('/add').post((req, res) => {
 });
 
 //delete order
-router.route('/:id').delete((req,res) =>{
-  Order.deleteOne({_id:req.params.id})
+router.route('/deleteFromOrders/:id').delete((req,res) =>{
+  Order.findByIdAndDelete(req.params.id)
   .then(() => res.json('Order deleted!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //update order status
-router.route('/:id').put((req, res) => {
+router.route('/updateInOrders/:id').put((req, res) => {
   const status = req.body.status;
   Order.updateOne({ _id : req.params.id}, { status : req.body.status})
      .then(() => res.json(' Order(s) Modified!'))

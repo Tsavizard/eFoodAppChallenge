@@ -3,37 +3,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ordersSchema = new Schema({
+  
   address: {
     type: String,
     required: true,
-    unique: false,
-    trim: true,
-    minlength: 3
+    unique: false
   },
   foods: [
     { _id: false,
       foodName: String, 
       basePrice: Number,
-      condoments: [{
-        _id: false,
-        condomentName: String,
-        condomentValue: Number
-      }],
-      extras: [{
-        _id: false,
-        extraName: String,
-        extraValue: Number
-      }],
-        foodTotalValue: Number
+      condoments: Array,
+      extras: Array,
+      conExPrice: Number,
+      totalPrice: Number
     }
   ], 
-  orderSum: {
-    type: Number,
-    required: true,
-    unique: false,
-    trim: false,
-    minlength: 3
-  },
+  orderSum: Number,
   status:{
       type: String
   },
@@ -42,7 +28,7 @@ const ordersSchema = new Schema({
   timestamps: true,
 }
 );
-
+ordersSchema.set('autoIndex', false);
 const Order = mongoose.model('Order', ordersSchema);
 
 module.exports = Order;
